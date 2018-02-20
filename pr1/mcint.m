@@ -20,5 +20,5 @@ function [valor] = mcint(fun, a, b,num_puntos)
   
   valor = M * (b - a) * (ndebajo/num_puntos);
    
-  
-  endfunction
+
+endfunction
