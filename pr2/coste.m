@@ -1,8 +1,6 @@
 function [J, grad] = coste(theta, X, y)
 
-  theta = theta';
-
-  valhipotesis = sigmoide((-1)*theta*X');
+  valhipotesis = sigmoide((-1)*theta'*X');
   m = rows(X);
 
   valory0 = ((-1) * y' * log(valhipotesis)');
@@ -10,6 +8,6 @@ function [J, grad] = coste(theta, X, y)
 
   J = (1/m)*(valory0-valory1);
 
-  grad = (1/m) * (valhipotesis' - y)' * X;
+  grad = (-1/m) * (valhipotesis' - y)' * X;
 
 endfunction
