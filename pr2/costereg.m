@@ -6,8 +6,8 @@ function [J, grad] = costereg(theta, X, y, lambda)
   valory0 = ((-1) * y' * log(valhipotesis)');
   valory1 = ((1-y)' * log(1-valhipotesis)');
 
-  J = (1/m)*(valory0-valory1) + (lambda/(2*m)) * sum(theta.^2);
+  J = (1/m)*(valory0-valory1) + (lambda/(2*m)) * sum((theta(2:rows(theta),:)).^2);
 
-    grad = ((-1/m) * (valhipotesis' - y)' * X + (lambda/m) * theta)(1, :);
+grad = ((-1/m) * (valhipotesis' - y)' * X + (lambda/m) * theta(2:rows(theta),:))(1, :);
 
 endfunction
