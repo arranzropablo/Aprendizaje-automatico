@@ -1,6 +1,6 @@
 function generarlcpol(X, y, lambda, Xval, yval, p)
 
-  inittheta = ones(p, 1);
+  inittheta = ones(p + 1, 1);
 
   X = generatepoldata(X, p);
   Xval = generatepoldata(Xval, p);
@@ -22,6 +22,7 @@ function generarlcpol(X, y, lambda, Xval, yval, p)
   plot([1:1:rows(X)], Jtrain, 'LineWidth', 2);
   xlabel('Numero de ejemplos de entrenamiento')
   ylabel('Error')
+  title(['Curvas de aprendizaje para lambda = ',num2str(lambda)])
   hold on;
   plot([1:1:rows(X)], Jval, 'LineWidth', 2);
   hold off;
