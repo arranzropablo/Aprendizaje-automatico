@@ -36,13 +36,7 @@ endfor
   legend (h, 'location', 'northeastoutside');
   set (h, 'fontsize', 20);
 
-#falta calcular el error con los datos de test, parece fallar al coger el minimo lambda, podemos verlo a ojo sino y hacer el codigo de debajo fuera
-#creo q es lo mejor, verlo a ojo, porque no se porque se no estan ordenados los Jval
-  [min, bestlambda] = min(Jval)
-  Jval
-
-  #theta = fmincg(@(t)(coste(t, newX, y, lambda(bestlambda))),inittheta,optimset('GradObj', 'on', 'MaxIter', 200));
-  #[Jtest, grad] = coste(theta, newXtest, ytest, lambda(bestlambda));
-  #bestlambda
+  theta = fmincg(@(t)(coste(t, newX, y, 3)),inittheta,optimset('GradObj', 'on', 'MaxIter', 200));
+  [Jtest, grad] = coste(theta, newXtest, ytest, 0)
 
 endfunction
