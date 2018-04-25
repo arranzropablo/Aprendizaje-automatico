@@ -28,6 +28,6 @@ endfor
 
 %model = svmTrain(X, y, bestC, @(x1, x2) gaussianKernel(x1, x2, bestsigma));
 model = svmTrain(X, y ,C, @linearKernel, 1e-3, 20);
-visualizeBoundary(X, y, model);
+%visualizeBoundary(X, y, model);
 
 endfunction
