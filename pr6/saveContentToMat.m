@@ -15,7 +15,7 @@ function saveContentToMat()
     email = processEmail(file_contents);
 
     email_splited = strsplit(email);
-
+    email_as_vector = zeros(rows(vocabList), 1);
     email_as_vector = ismember(vocabList, email_splited);
 
     easy_ham(i, :) = email_as_vector;
@@ -42,7 +42,7 @@ function saveContentToMat()
     email = processEmail(file_contents);
 
     email_splited = strsplit(email);
-
+    email_as_vector = zeros(rows(vocabList), 1);
     email_as_vector = ismember(vocabList, email_splited);
 
     hard_ham(i, :) = email_as_vector;
@@ -69,7 +69,7 @@ function saveContentToMat()
     email = processEmail(file_contents);
 
     email_splited = strsplit(email);
-
+    email_as_vector = zeros(rows(vocabList), 1);
     email_as_vector = ismember(vocabList, email_splited);
 
     spam(i, :) = email_as_vector;
