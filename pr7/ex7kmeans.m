@@ -1,4 +1,4 @@
-function ex7kmeans()
+function idx = ex7kmeans()
   load("ex7data2.mat");
   K = 3;
   randidx = randperm(size(X, 1));

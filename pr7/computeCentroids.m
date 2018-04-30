@@ -6,7 +6,7 @@ function centroids = computeCentroids(X, idx, K)
     sumatorio = zeros(1, columns(X));
     for j = 1:rows(Ck)
       if(Ck(j, :) == 1)
-        sumatorio = sumatorio + X(j, :)
+        sumatorio = sumatorio + X(j, :);
       endif
     endfor
 
