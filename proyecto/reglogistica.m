@@ -57,6 +57,7 @@ function reglogistica()
     for i = 1:columns(lambda)
 
         printf("Vuelta %d/%d \n", i, columns(lambda));
+        fflush(stdout);
         [theta, cost] = fminunc(@(t) (costereg(t, X, y, lambda(:,i))), theta_inicial, opciones);
         percentageval = percentage(theta, Xval, yval);
 
