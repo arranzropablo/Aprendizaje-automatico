@@ -1,5 +1,7 @@
 function reglogistica()
     fflush(stdout);
+    warning('off','all');
+    
     addpath("reglogistica");
     file = "mushroomdata";
 
