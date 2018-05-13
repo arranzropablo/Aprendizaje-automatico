@@ -1,4 +1,4 @@
-function [probs, class] = forwardprop(X, theta, num_entradas, num_ocultas, num_etiquetas)
+function h = forwardprop(X, theta, num_entradas, num_ocultas, num_etiquetas)
 
   Theta1 = reshape(theta(1:num_ocultas * (num_entradas + 1)), num_ocultas, (num_entradas + 1));
   Theta2 = reshape(theta(1 + (num_ocultas * (num_entradas + 1)):end), num_etiquetas, (num_ocultas + 1));
@@ -16,7 +16,5 @@ function [probs, class] = forwardprop(X, theta, num_entradas, num_ocultas, num_e
 
   z3 = Theta2 * a2;
   h = sigmoide(z3);
-
-  [probs, class] = max(h);
 
 endfunction

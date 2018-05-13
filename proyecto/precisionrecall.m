@@ -1,11 +1,19 @@
-function [precision, recall] = precisionrecall(theta, X, Y, threshold)
+function [precision, recall] = precisionrecall(theta, X, y, threshold, num_entradas, num_ocultas, num_etiquetas)
 
-    resultados = sigmoide((-1)*theta'*X')';
+    if(exist("num_entradas", "var") && exist("num_ocultas", "var") && exist("num_etiquetas", "var"))
+        resultados = forwardprop(X, theta, num_entradas, num_ocultas, num_etiquetas)(2,:)';
+    else
+        resultados = sigmoide((-1)*theta'*X')';
+    endif
 
-    actualpos = Y == 1;
+    actualpos = y == 1;
     predictedpos = resultados >= threshold;
     truepos = actualpos + predictedpos == 2;
-    precision = sum(truepos) / sum(predictedpos);
+    if (predictedpos == 0)
+        precision = 1;
+    else
+        precision = sum(truepos) / sum(predictedpos);
+    endif
     recall = sum(truepos) / sum(actualpos);
 
 endfunction
