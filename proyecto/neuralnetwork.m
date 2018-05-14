@@ -90,8 +90,22 @@ function neuralnetwork()
             besttheta = all_theta;
         endif
 
+        jtrain(i) = costeRN(all_theta, columns(X), 10, 2, X, y, lambda(:,i));
+        jval(i) = costeRN(all_theta,Xval,yval,lambda(:,i));
+
     endfor
     
+    plot(lambda, jtrain, 'LineWidth', 2);
+    xlabel('lambda')
+    ylabel('Error')
+    hold on;
+    plot(lambda, jval, 'LineWidth', 2);
+    hold off;
+
+    h = legend ({'jtrain'}, 'jval');
+    legend (h, 'location', 'northeastoutside');
+    set (h, 'fontsize', 20);
+
     percentagetest = percentageNN(besttheta, Xtest, ytest, columns(Xtest), 10, 2);
 
     printf("El lambda optimo encontrado es %.2f que ha clasificado correctamente el %.2f%% de los datos de cross validation. \n", bestlambda, maxpercentage * 100);
@@ -99,7 +113,7 @@ function neuralnetwork()
 
     %a parte del obtenido quizás hacer un caso en el q metemos algun threshold que priorice el decir q son venenosas no siendolo
 
-    threshold = choosethreshold(besttheta, Xval, yval, columns(X), 10, 2);
+    threshold = 0.3;%choosethreshold(besttheta, Xval, yval, columns(X), 10, 2);
     [precision, recall] = precisionrecall(besttheta, Xtest, ytest, threshold, columns(X), 10, 2);
 
     printf("Este algoritmo tiene una precision de %.2f%% y un recall de %.2f%%. Para estos calculos se ha calculado el threshold mas adecuado que es %.2f. \n", precision * 100, recall * 100, threshold);

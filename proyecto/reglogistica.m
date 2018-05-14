@@ -72,14 +72,55 @@ function reglogistica()
             bestcost = cost;
         endif
 
+        jtrain(i) = cost;
+        jval(i) = costereg(theta,Xval,yval,lambda(:,i));
+
     endfor
+
+    plot(lambda, jtrain, 'LineWidth', 2);
+    xlabel('lambda')
+    ylabel('Error')
+    hold on;
+    plot(lambda, jval, 'LineWidth', 2);
+    hold off;
+
+    h = legend ({'jtrain'}, 'jval');
+    legend (h, 'location', 'northeastoutside');
+    set (h, 'fontsize', 20);
 
     [percentagetest] = percentage(besttheta, Xtest, ytest);
     printf("El lambda optimo encontrado es %.2f que ha clasificado correctamente el %.2f%% de los datos de cross validation. \n", bestlambda, maxpercentage * 100);
     printf("Aplicando los datos de test sobre el modelo optimo encontrado obtenemos una clasificación correcta del %.2f%% de los datos. \n", percentagetest * 100);
+    printf("Pulsa una tecla para continuar...");
+    pause();
+    printf("\n");
 
     threshold = choosethreshold(theta, Xval, yval);
     [precision, recall] = precisionrecall(besttheta, Xtest, ytest, threshold);
 
     printf("Este algoritmo tiene una precision de %.2f%% y un recall de %.2f%%. Para estos calculos se ha calculado el threshold mas adecuado que es %.2f. \n", precision * 100, recall * 100, threshold);
+
+    fflush(stdout);
+
+    for i = 1:rows(X)
+        printf("Datos: %d/%d \n", i, rows(X));
+        fflush(stdout);
+
+        [theta, cost] = fminunc(@(t) (costereg(t, X(1:i,:), y(1:i,:), bestlambda)), theta_inicial, opciones);
+        jtrain(i) = cost;
+        jval(i) = costereg(theta, Xval, yval, bestlambda);
+    endfor
+
+    plot([1:1:rows(X)], jtrain, 'LineWidth', 2);
+    xlabel('Numero de ejemplos de entrenamiento')
+    ylabel('Error')
+    hold on;
+    plot([1:1:rows(X)], jval, 'LineWidth', 2);
+    hold off;
+
+    h = legend ({'jtrain'}, 'jval');
+    legend (h, 'location', 'northeastoutside');
+    set (h, 'fontsize', 20);
+
+
 endfunction
