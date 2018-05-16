@@ -115,7 +115,7 @@ function neuralnetwork()
 
     %a parte del obtenido quizás hacer un caso en el q metemos algun threshold que priorice el decir q son venenosas no siendolo
 
-    threshold = 0.3;%choosethreshold(besttheta, Xval, yval, columns(X), 10, 2);
+    threshold = choosethreshold(besttheta, Xval, yval, columns(X), 10, 2);
     [precision, recall] = precisionrecall(besttheta, Xtest, ytest, threshold, columns(X), 10, 2);
 
     printf("Este algoritmo tiene una precision de %.2f%% y un recall de %.2f%%. Para estos calculos se ha calculado el threshold mas adecuado que es %.2f. \n", precision * 100, recall * 100, threshold);
@@ -126,9 +126,9 @@ function neuralnetwork()
         printf("Datos: %d/%d \n", i, rows(X));
         fflush(stdout);
 
-        all_theta = fmincg(@(t) (costeRN(t, columns(X), 10, 2, X, y, bestlambda)), theta_inicial, opciones);
+        all_theta = fmincg(@(t) (costeRN(t, columns(X), 10, 2, X(1:i,:), y(1:i,:), bestlambda)), theta_inicial, opciones);
 
-        jtrain(i) = costeRN(all_theta, columns(X), 10, 2, X, y, bestlambda);
+        jtrain(i) = costeRN(all_theta, columns(X), 10, 2, X(1:i,:), y(1:i,:), bestlambda);
         jval(i) = costeRN(all_theta, columns(X), 10, 2, Xval, yval, bestlambda);
     endfor
 
