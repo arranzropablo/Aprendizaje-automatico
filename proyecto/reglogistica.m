@@ -7,7 +7,7 @@ function reglogistica()
 
     printf("Aplicar regresión logística regularizada. \n");
     printf("Pulsa una tecla para continuar...");
-    pause();
+    %pause();
     printf("\n");
 
     load(file);
@@ -26,7 +26,7 @@ function reglogistica()
     printf("El calculo ha durado %.2f segundos y se ha alcanzado un coste minimo de %f. \n", time, cost);
     %printf("Pulsa una tecla para mostrar los valores optimos de theta...");
     printf("Pulsa una tecla para continuar...");
-    pause();
+    %pause();
 	fflush(stdout);
     printf("\n");
     %disp(theta);
@@ -52,7 +52,7 @@ function reglogistica()
 
     printf("Ahora aplicaremos regresión logistica regularizada separando nuestro set de datos en 3 subconjuntos (train, cv y test). \n");
     printf("Pulsa una tecla para continuar...");
-    pause();
+    %pause();
     printf("\n");
 
     lambda = [0.01, 0.03, 0.1, 0.3, 1, 3, 10, 30];
@@ -77,22 +77,23 @@ function reglogistica()
 
     endfor
 
-    plot(lambda, jtrain, 'LineWidth', 2);
-    xlabel('lambda')
-    ylabel('Error')
-    hold on;
-    plot(lambda, jval, 'LineWidth', 2);
-    hold off;
+    save curvadeevolucionlambdareglogistica.mat jtrain jval lambda;
+    % plot(lambda, jtrain, 'LineWidth', 2);
+    % xlabel('lambda')
+    % ylabel('Error')
+    % hold on;
+    % plot(lambda, jval, 'LineWidth', 2);
+    % hold off;
 
-    h = legend ({'jtrain'}, 'jval');
-    legend (h, 'location', 'northeastoutside');
-    set (h, 'fontsize', 20);
+    % h = legend ({'jtrain'}, 'jval');
+    % legend (h, 'location', 'northeastoutside');
+    % set (h, 'fontsize', 20);
 
     [percentagetest] = percentage(besttheta, Xtest, ytest);
     printf("El lambda optimo encontrado es %.2f que ha clasificado correctamente el %.2f%% de los datos de cross validation. \n", bestlambda, maxpercentage * 100);
     printf("Aplicando los datos de test sobre el modelo optimo encontrado obtenemos una clasificación correcta del %.2f%% de los datos. \n", percentagetest * 100);
     printf("Pulsa una tecla para continuar...");
-    pause();
+    %pause();
     printf("\n");
 
     threshold = choosethreshold(theta, Xval, yval);
@@ -111,16 +112,17 @@ function reglogistica()
         jval(i) = costereg(theta, Xval, yval, bestlambda);
     endfor
 
-    plot([1:1:rows(X)], jtrain, 'LineWidth', 2);
-    xlabel('Numero de ejemplos de entrenamiento')
-    ylabel('Error')
-    hold on;
-    plot([1:1:rows(X)], jval, 'LineWidth', 2);
-    hold off;
+    save learningcurvesreglogistica.mat jtrain jval;
+    % plot([1:1:rows(X)], jtrain, 'LineWidth', 2);
+    % xlabel('Numero de ejemplos de entrenamiento')
+    % ylabel('Error')
+    % hold on;
+    % plot([1:1:rows(X)], jval, 'LineWidth', 2);
+    % hold off;
 
-    h = legend ({'jtrain'}, 'jval');
-    legend (h, 'location', 'northeastoutside');
-    set (h, 'fontsize', 20);
+    % h = legend ({'jtrain'}, 'jval');
+    % legend (h, 'location', 'northeastoutside');
+    % set (h, 'fontsize', 20);
 
 
 endfunction

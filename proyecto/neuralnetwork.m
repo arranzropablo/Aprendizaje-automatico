@@ -91,20 +91,22 @@ function neuralnetwork()
         endif
 
         jtrain(i) = costeRN(all_theta, columns(X), 10, 2, X, y, lambda(:,i));
-        jval(i) = costeRN(all_theta,Xval,yval,lambda(:,i));
+        jval(i) = costeRN(all_theta, columns(X), 10, 2, Xval, yval, lambda(:,i));
 
     endfor
-    
-    plot(lambda, jtrain, 'LineWidth', 2);
-    xlabel('lambda')
-    ylabel('Error')
-    hold on;
-    plot(lambda, jval, 'LineWidth', 2);
-    hold off;
 
-    h = legend ({'jtrain'}, 'jval');
-    legend (h, 'location', 'northeastoutside');
-    set (h, 'fontsize', 20);
+    save curvadeevolucionlambdaNN.mat jtrain jval lambda;
+
+    % plot(lambda, jtrain, 'LineWidth', 2);
+    % xlabel('lambda')
+    % ylabel('Error')
+    % hold on;
+    % plot(lambda, jval, 'LineWidth', 2);
+    % hold off;
+
+    % h = legend ({'jtrain'}, 'jval');
+    % legend (h, 'location', 'northeastoutside');
+    % set (h, 'fontsize', 20);
 
     percentagetest = percentageNN(besttheta, Xtest, ytest, columns(Xtest), 10, 2);
 
@@ -117,4 +119,29 @@ function neuralnetwork()
     [precision, recall] = precisionrecall(besttheta, Xtest, ytest, threshold, columns(X), 10, 2);
 
     printf("Este algoritmo tiene una precision de %.2f%% y un recall de %.2f%%. Para estos calculos se ha calculado el threshold mas adecuado que es %.2f. \n", precision * 100, recall * 100, threshold);
+
+    fflush(stdout);
+
+    for i = 1:rows(X)
+        printf("Datos: %d/%d \n", i, rows(X));
+        fflush(stdout);
+
+        all_theta = fmincg(@(t) (costeRN(t, columns(X), 10, 2, X, y, bestlambda)), theta_inicial, opciones);
+
+        jtrain(i) = costeRN(all_theta, columns(X), 10, 2, X, y, bestlambda);
+        jval(i) = costeRN(all_theta, columns(X), 10, 2, Xval, yval, bestlambda);
+    endfor
+
+    save learningcurvesNN.mat jtrain jval;
+    % plot([1:1:rows(X)], jtrain, 'LineWidth', 2);
+    % xlabel('Numero de ejemplos de entrenamiento')
+    % ylabel('Error')
+    % hold on;
+    % plot([1:1:rows(X)], jval, 'LineWidth', 2);
+    % hold off;
+
+    % h = legend ({'jtrain'}, 'jval');
+    % legend (h, 'location', 'northeastoutside');
+    % set (h, 'fontsize', 20);
+
 endfunction
