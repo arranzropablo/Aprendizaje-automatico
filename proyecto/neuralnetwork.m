@@ -7,7 +7,7 @@ function neuralnetwork()
 
     printf("Aplicar redes neuronales. \n");
     printf("Pulsa una tecla para continuar...");
-    pause();
+    %pause();
     printf("\n");
 
     load(file);
@@ -25,7 +25,7 @@ function neuralnetwork()
     printf("El calculo ha durado %.2f segundos y se ha alcanzado un coste minimo de %f. \n", time, cost);
     %printf("Pulsa una tecla para mostrar los valores optimos de theta...");
     printf("Pulsa una tecla para continuar...");
-    pause();
+    %pause();
     printf("\n");
     %disp(theta);
 
@@ -55,7 +55,7 @@ function neuralnetwork()
     printf("El calculo ha durado %.2f segundos y se ha alcanzado un coste minimo de %f. \n", time, cost);
     %printf("Pulsa una tecla para mostrar los valores optimos de theta...");
     printf("Pulsa una tecla para continuar...");
-    pause();
+    %pause();
     printf("\n");
     %disp(theta);
 
@@ -68,7 +68,7 @@ function neuralnetwork()
 
     printf("Ahora vamos a calcular el lambda que mejor clasifique nuestros datos. Duración estimada: 15 mins. \n\n ");
     printf("Pulsa una tecla para continuar...");
-    pause();
+    %pause();
     printf("\n");
 
     lambda = [0.01, 0.1, 1, 10];
