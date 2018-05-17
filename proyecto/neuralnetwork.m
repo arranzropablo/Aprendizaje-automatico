@@ -71,7 +71,7 @@ function neuralnetwork()
     %pause();
     printf("\n");
 
-    lambda = [0.01, 0.1, 1, 10];
+    lambda = [0.01, 0.03, 0.1, 0.3, 1, 3, 10];
     maxpercentage = 0;
     X = auxX;
     y = auxy;
@@ -86,34 +86,20 @@ function neuralnetwork()
         if(maxpercentage < percentage)
             maxpercentage = percentage;
             bestlambda = lambda(:,i);
-            %depende mucho de la aleatoriedad de los datos, porqe a veces lambda renta q sea 1, a veces 10 y a veces 0.01
             besttheta = all_theta;
         endif
 
-        jtrain(i) = costeRN(all_theta, columns(X), 10, 2, X, y, lambda(:,i));
-        jval(i) = costeRN(all_theta, columns(X), 10, 2, Xval, yval, lambda(:,i));
+        [jtrain(i), grad] = costeRN(all_theta, columns(X), 10, 2, X, y, lambda(:,i));
+        [jval(i), grad] = costeRN(all_theta, columns(X), 10, 2, Xval, yval, lambda(:,i));
 
     endfor
 
     save curvadeevolucionlambdaNN.mat jtrain jval lambda;
 
-    % plot(lambda, jtrain, 'LineWidth', 2);
-    % xlabel('lambda')
-    % ylabel('Error')
-    % hold on;
-    % plot(lambda, jval, 'LineWidth', 2);
-    % hold off;
-
-    % h = legend ({'jtrain'}, 'jval');
-    % legend (h, 'location', 'northeastoutside');
-    % set (h, 'fontsize', 20);
-
     percentagetest = percentageNN(besttheta, Xtest, ytest, columns(Xtest), 10, 2);
 
     printf("El lambda optimo encontrado es %.2f que ha clasificado correctamente el %.2f%% de los datos de cross validation. \n", bestlambda, maxpercentage * 100);
     printf("Aplicando los datos de test sobre el modelo optimo encontrado obtenemos una clasificación correcta del %.2f%% de los datos. \n", percentagetest * 100);
-
-    %a parte del obtenido quizás hacer un caso en el q metemos algun threshold que priorice el decir q son venenosas no siendolo
 
     threshold = choosethreshold(besttheta, Xval, yval, columns(X), 10, 2);
     [precision, recall] = precisionrecall(besttheta, Xtest, ytest, threshold, columns(X), 10, 2);
@@ -128,20 +114,10 @@ function neuralnetwork()
 
         all_theta = fmincg(@(t) (costeRN(t, columns(X), 10, 2, X(1:i,:), y(1:i,:), bestlambda)), theta_inicial, opciones);
 
-        jtrain(i) = costeRN(all_theta, columns(X), 10, 2, X(1:i,:), y(1:i,:), bestlambda);
-        jval(i) = costeRN(all_theta, columns(X), 10, 2, Xval, yval, bestlambda);
+        [jtrain(i), grad] = costeRN(all_theta, columns(X), 10, 2, X(1:i,:), y(1:i,:), bestlambda);
+        [jval(i), grad] = costeRN(all_theta, columns(X), 10, 2, Xval, yval, bestlambda);
     endfor
 
     save learningcurvesNN.mat jtrain jval;
-    % plot([1:1:rows(X)], jtrain, 'LineWidth', 2);
-    % xlabel('Numero de ejemplos de entrenamiento')
-    % ylabel('Error')
-    % hold on;
-    % plot([1:1:rows(X)], jval, 'LineWidth', 2);
-    % hold off;
-
-    % h = legend ({'jtrain'}, 'jval');
-    % legend (h, 'location', 'northeastoutside');
-    % set (h, 'fontsize', 20);
 
 endfunction

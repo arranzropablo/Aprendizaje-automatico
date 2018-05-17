@@ -1,6 +1,6 @@
 function threshold = choosethreshold(theta, X, y, num_entradas, num_ocultas, num_etiquetas)
 
-    posiblethresholds = [0.4 : 0.01 : 0.6];
+    posiblethresholds = [0 : 0.01 : 1];
     maxf1 = 0;
 
     for i = 1:columns(posiblethresholds)

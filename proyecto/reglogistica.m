@@ -17,7 +17,7 @@ function reglogistica()
     X(:, 2:columns(X) + 1) = X;
     X(:, 1) = ones(rows(X), 1);
 
-    opciones = optimset("GradObj", "on", "MaxIter", 100);
+    opciones = optimset("GradObj", "on", "MaxIter", 500);
     tic;
     [theta, cost] = fminunc(@(t) (costereg(t, X, y, 0.01)), theta_inicial, opciones);
     time = toc;
@@ -26,7 +26,7 @@ function reglogistica()
     printf("El calculo ha durado %.2f segundos y se ha alcanzado un coste minimo de %f. \n", time, cost);
     %printf("Pulsa una tecla para mostrar los valores optimos de theta...");
     printf("Pulsa una tecla para continuar...");
-    %pause();
+    pause();
 	fflush(stdout);
     printf("\n");
     %disp(theta);
@@ -73,21 +73,11 @@ function reglogistica()
         endif
 
         jtrain(i) = cost;
-        jval(i) = costereg(theta,Xval,yval,lambda(:,i));
+        [jval(i), grad] = costereg(theta,Xval,yval,lambda(:,i));
 
     endfor
 
     save curvadeevolucionlambdareglogistica.mat jtrain jval lambda;
-    % plot(lambda, jtrain, 'LineWidth', 2);
-    % xlabel('lambda')
-    % ylabel('Error')
-    % hold on;
-    % plot(lambda, jval, 'LineWidth', 2);
-    % hold off;
-
-    % h = legend ({'jtrain'}, 'jval');
-    % legend (h, 'location', 'northeastoutside');
-    % set (h, 'fontsize', 20);
 
     [percentagetest] = percentage(besttheta, Xtest, ytest);
     printf("El lambda optimo encontrado es %.2f que ha clasificado correctamente el %.2f%% de los datos de cross validation. \n", bestlambda, maxpercentage * 100);
@@ -109,20 +99,9 @@ function reglogistica()
 
         [theta, cost] = fminunc(@(t) (costereg(t, X(1:i,:), y(1:i,:), bestlambda)), theta_inicial, opciones);
         jtrain(i) = cost;
-        jval(i) = costereg(theta, Xval, yval, bestlambda);
+        [jval(i), grad] = costereg(theta, Xval, yval, bestlambda);
     endfor
 
     save learningcurvesreglogistica.mat jtrain jval;
-    % plot([1:1:rows(X)], jtrain, 'LineWidth', 2);
-    % xlabel('Numero de ejemplos de entrenamiento')
-    % ylabel('Error')
-    % hold on;
-    % plot([1:1:rows(X)], jval, 'LineWidth', 2);
-    % hold off;
-
-    % h = legend ({'jtrain'}, 'jval');
-    % legend (h, 'location', 'northeastoutside');
-    % set (h, 'fontsize', 20);
-
 
 endfunction

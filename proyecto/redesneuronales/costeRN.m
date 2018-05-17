@@ -1,4 +1,4 @@
-function [J grad] = costeRN(params_rn, num_entradas, num_ocultas, num_etiquetas, X, y, lambda)
+function [J, grad] = costeRN(params_rn, num_entradas, num_ocultas, num_etiquetas, X, y, lambda)
 
   X(:,2:columns(X)+1) = X;
   X(:,1) = ones(rows(X),1);

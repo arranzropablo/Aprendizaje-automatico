@@ -3,7 +3,7 @@ function [precision, recall] = precisionrecall(theta, X, y, threshold, num_entra
     if(exist("num_entradas", "var") && exist("num_ocultas", "var") && exist("num_etiquetas", "var"))
         resultados = forwardprop(X, theta, num_entradas, num_ocultas, num_etiquetas)(2,:)';
     else
-        resultados = sigmoide((-1)*theta'*X')';
+        resultados = sigmoide(X*theta);
     endif
 
     actualpos = y == 1;
