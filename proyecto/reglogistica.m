@@ -22,7 +22,7 @@ function reglogistica()
     [theta, cost] = fminunc(@(t) (costereg(t, X, y, 0.01)), theta_inicial, opciones);
     time = toc;
 	fflush(stdout);
-    printf("Se han calculado los valores de theta con un máximo de 100 iteraciones y un valor de regularización (lambda) = 0.01 \n");
+    printf("Se han calculado los valores de theta con un máximo de 500 iteraciones y un valor de regularización (lambda) = 0.01 \n");
     printf("El calculo ha durado %.2f segundos y se ha alcanzado un coste minimo de %f. \n", time, cost);
     %printf("Pulsa una tecla para mostrar los valores optimos de theta...");
     printf("Pulsa una tecla para continuar...");
