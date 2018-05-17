@@ -7,7 +7,7 @@ function neuralnetwork()
 
     printf("Aplicar redes neuronales. \n");
     printf("Pulsa una tecla para continuar...");
-    %pause();
+    pause();
     printf("\n");
 
     load(file);
@@ -25,7 +25,7 @@ function neuralnetwork()
     printf("El calculo ha durado %.2f segundos y se ha alcanzado un coste minimo de %f. \n", time, cost);
     %printf("Pulsa una tecla para mostrar los valores optimos de theta...");
     printf("Pulsa una tecla para continuar...");
-    %pause();
+    pause();
     printf("\n");
     %disp(theta);
 
@@ -55,7 +55,7 @@ function neuralnetwork()
     printf("El calculo ha durado %.2f segundos y se ha alcanzado un coste minimo de %f. \n", time, cost);
     %printf("Pulsa una tecla para mostrar los valores optimos de theta...");
     printf("Pulsa una tecla para continuar...");
-    %pause();
+    pause();
     printf("\n");
     %disp(theta);
 
@@ -66,9 +66,9 @@ function neuralnetwork()
     printf("Testeando el modelo con los datos de test obtenemos un porcentaje de acierto de %.2f%% \n", percentage * 100);
     printf("Consideramos este dato más valido ya que no son los datos que hemos usado para el entrenamiento \n\n ");
 
-    printf("Ahora vamos a calcular el lambda que mejor clasifique nuestros datos. Duración estimada: 15 mins. \n\n ");
+    printf("Ahora vamos a calcular el lambda que mejor clasifique nuestros datos. \n\n ");
     printf("Pulsa una tecla para continuar...");
-    %pause();
+    pause();
     printf("\n");
 
     lambda = [0.01, 0.03, 0.1, 0.3, 1, 3, 10];
@@ -77,7 +77,7 @@ function neuralnetwork()
     y = auxy;
 
     for i = 1:columns(lambda)
-
+        
         printf("Vuelta %d/%d \n", i, columns(lambda));
         fflush(stdout);
         all_theta = fmincg(@(t) (costeRN(t, columns(X), 10, 2, X, y, lambda(:,i))), theta_inicial, opciones);
@@ -109,8 +109,10 @@ function neuralnetwork()
     fflush(stdout);
 
     for i = 1:rows(X)
-        printf("Datos: %d/%d \n", i, rows(X));
-        fflush(stdout);
+        if(mod(i,1000) == 0)
+            printf("Datos: %d/%d \n", i, rows(X));
+            fflush(stdout);
+        endif
 
         all_theta = fmincg(@(t) (costeRN(t, columns(X), 10, 2, X(1:i,:), y(1:i,:), bestlambda)), theta_inicial, opciones);
 

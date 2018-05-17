@@ -7,7 +7,7 @@ function reglogistica()
 
     printf("Aplicar regresión logística regularizada. \n");
     printf("Pulsa una tecla para continuar...");
-    %pause();
+    pause();
     printf("\n");
 
     load(file);
@@ -52,7 +52,7 @@ function reglogistica()
 
     printf("Ahora aplicaremos regresión logistica regularizada separando nuestro set de datos en 3 subconjuntos (train, cv y test). \n");
     printf("Pulsa una tecla para continuar...");
-    %pause();
+    pause();
     printf("\n");
 
     lambda = [0.01, 0.03, 0.1, 0.3, 1, 3, 10, 30];
@@ -83,7 +83,7 @@ function reglogistica()
     printf("El lambda optimo encontrado es %.2f que ha clasificado correctamente el %.2f%% de los datos de cross validation. \n", bestlambda, maxpercentage * 100);
     printf("Aplicando los datos de test sobre el modelo optimo encontrado obtenemos una clasificación correcta del %.2f%% de los datos. \n", percentagetest * 100);
     printf("Pulsa una tecla para continuar...");
-    %pause();
+    pause();
     printf("\n");
 
     threshold = choosethreshold(theta, Xval, yval);
@@ -94,8 +94,10 @@ function reglogistica()
     fflush(stdout);
 
     for i = 1:rows(X)
-        printf("Datos: %d/%d \n", i, rows(X));
-        fflush(stdout);
+        if(mod(i,1000) == 0)
+            printf("Datos: %d/%d \n", i, rows(X));
+            fflush(stdout);
+        endif
 
         [theta, cost] = fminunc(@(t) (costereg(t, X(1:i,:), y(1:i,:), bestlambda)), theta_inicial, opciones);
         jtrain(i) = cost;
