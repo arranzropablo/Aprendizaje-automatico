@@ -50,7 +50,7 @@ function neuralnetwork()
     tic;
     all_theta = fmincg(@(t) (costeRN(t, columns(X), 10, 2, X, y, 0.01)), theta_inicial, opciones);
     time = toc;
-    printf("Se han calculado los valores de theta con un máximo de 50 iteraciones y un valor de regularización (lambda) = 0.01 \n");
+    printf("Se han calculado los valores de theta con un máximo de 250 iteraciones y un valor de regularización (lambda) = 0.01 \n");
     [cost, grad] = costeRN(all_theta, columns(X), 10, 2, X, y, 0.01);
     printf("El calculo ha durado %.2f segundos y se ha alcanzado un coste minimo de %f. \n", time, cost);
     %printf("Pulsa una tecla para mostrar los valores optimos de theta...");
