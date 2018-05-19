@@ -66,4 +66,14 @@ function svm()
 
     printf("Los valores para C y para sigma optimos son %.2f y %.2f respectivamente. \nEl porcentaje de acierto con esos valores en los datos de cross-validation es %.2f%% \nEl porcentaje de acierto sobre los datos de test es %.2f%% \n\n", C, sigma, percentagecv * 100, percentage * 100);
 
+    truepos = ytest + prediction == 2;
+    if (prediction == 0)
+        precision = 1;
+    else
+        precision = sum(truepos) / sum(prediction);
+    endif
+    recall = sum(truepos) / sum(ytest);
+
+    printf("Este algoritmo tiene una precision de %.2f%% y un recall de %.2f%%. \n", precision * 100, recall * 100);
+
 endfunction

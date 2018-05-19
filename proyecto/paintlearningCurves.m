@@ -1,11 +1,11 @@
 function paintlearningCurves()
-    load("learningcurvesreglogistica.mat")
-    plot([1:1:columns(jtrain)], jtrain, 'LineWidth', 2);
+    load("learningcurvesNN.mat")
+    plot([3000:1:columns(jtrain)], jtrain(3000:end), 'LineWidth', 2);
     xlabel('Numero de ejemplos de entrenamiento')
     ylabel('Error')
-    hold on;
-    plot([1:1:columns(jval)], jval, 'LineWidth', 2);
-    hold off;
+    % hold on;
+    % plot([3000:1:columns(jval)], jval(3000:end), 'LineWidth', 2);
+    % hold off;
 
     h = legend ({'jtrain'}, 'jval');
     legend (h, 'location', 'northeastoutside');
