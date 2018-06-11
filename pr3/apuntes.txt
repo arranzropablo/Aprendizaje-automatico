@@ -1,7 +1,0 @@
-X(:,2:columns(X)+1) = X;
-X(:,1) = ones(5000,1);
-initial_theta = zeros(401, 1);
-
-llamamos a la funcion con 
-
-[J, grad] = lrCostFunction(zeros(401,1), X, y, 1)
